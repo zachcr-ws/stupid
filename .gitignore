@@ -1,0 +1,20 @@
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+tags
+wp-config.php
+db-config.php
+*~
+nbproject
+.project
+cache
+*.bak
+blogs.dir
+/memcache-config.php
+.sass-cache
+*-ck.js
+Original\ Files

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/jquery.js"></script>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div class='result'>
+    	<div class='title'>时间到</div>
+    	<div class='body'>
+    		<div class='res'>获得分数：<span></span></div>
+    		<div class='num'>杀死人数：<span></span></div>
+    	</div>
+    	<div class='restart'>重新开始</div>
+    </div>
+    <div class="score">
+    	<div class='title'>战斗成果<div>
+    	<div class='killnum'>
+    		杀死敌人：<span class='font1'>0</span>
+    	</div>	
+    	<div class="getscore">
+    		获得分数：<span class='font1'>0</span>
+    	</div>
+    </div>
+    <div class='vedio'>
+	  	<embed src="" id="born" loop="0" autostart="false" hidden="true"></embed>
+
+	  	<audio id='cold' > 
+	    	<source src='sounds/cold.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='die-1' > 
+	    	<source src='sounds/die-1.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='die-2' >  
+	    	<source src='sounds/die-2.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='die-3' >  
+	    	<source src='sounds/die-3.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='flash' >  
+	    	<source src='sounds/flash.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='flash' >  
+	    	<source src='sounds/jingxia-1.ogg' type='audio/ogg'> 
+	  	</audio> 
+
+	  	<audio id='flash' >  
+	    	<source src='sounds/jingxia-2.ogg' type='audio/ogg'> 
+	  	</audio> 
+    </div>
+    <div id = 'sounds'></div>
+    <div id = 'flash'></div>
+    <div id = "bg">
+    	<embed src="/sounds/discovery5.ogg" loop="1000" autostart="true" hidden="true"></embed>
+    </div>
+    <script src="/javascripts/stupid.js"></script>
+  </body>
+</html>

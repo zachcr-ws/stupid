@@ -1,0 +1,86 @@
+*{
+  margin: 0;
+  padding: 0;
+  overflow:hidden;
+}
+
+body {
+ background:#333; 
+}
+
+#c{
+  width:1200px;
+  height:800px;
+  margin:0px auto;
+  display:block;
+}
+
+.score{
+	position: absolute;
+	top:100px;
+	right:0px;
+	z-index:1000;
+	background: #3e4548;
+	width:180px;
+	height:160px;
+	border-radius: 5px;
+	padding:20px 5px;
+	color:#aaa;
+}
+.score div{
+	padding:12px;
+	text-align: left;
+}
+.dataArea{
+	position: absolute;
+	bottom: 0px;
+	right:0px;
+	width:180px;
+	height:100px;
+	background: #3e4548;
+}
+
+.result{
+	position: absolute;
+	width:500px;
+	height:400px;
+	left:450px;
+	top:100px;
+	background: #3e4548;
+	border-radius: 5px;
+	display: none;
+}
+
+.result .title{
+	padding:30px 50px;
+	color:#fff;
+	border-bottom: 1px solid #aaa;
+	width:60%;
+	font-size: 25px;
+	margin-left:20px;
+}
+
+.result .body{
+	padding:20px 50px;
+	width:60%;
+	color:#fff;
+}
+
+.result .body div{
+	padding:40px 50px;
+}
+
+.result .restart{
+	padding:10px 30px;
+	background: #777;
+	border-radius: 3px;
+	width:100px;
+	text-align: center;
+	color:#fff;
+	cursor: pointer;
+	margin:0 auto;
+}
+.result .restart:hover{
+	background: #aaa;
+}
+
