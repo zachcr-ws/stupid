@@ -84,3 +84,21 @@ body {
 	background: #aaa;
 }
 
+.description{
+	position: absolute;
+	width:200px;
+	height:300px;
+	left:0px;
+	top:15%;
+	background: #3e4548;
+	color:#aaa;
+	padding:15px;
+	border-radius: 5px
+}
+.description .title{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #aaa;
+}
+.description .content{
+	padding-top:10px;
+}

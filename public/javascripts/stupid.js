@@ -442,6 +442,7 @@ Toolbar.prototype.draw = function(){
 }
 
 function gameResult(){
+	clearTimeout(allInterval);
 	$(".result").show();
 	$(".result .body .res span").text(all_score);
 	$(".result .body .num span").text(kill_num);
@@ -1515,7 +1516,7 @@ window.onload = function() {
    		},200);
 
 	   	var dis = Utils.distance(point,planet);
-		if(dis < 310 && dis >= planet.r){
+		if(dis < 310 && dis >= planet.r - 60){
 			if(toolbar.get_stop_angle() == 360){
 				toolbar.set_stop_angle();
 				touch_angle = Utils.trans_angle(point);
