@@ -1421,7 +1421,7 @@ var Vedio = function(type){
 	play(this.vedio[type]);
 	function play(url,dom){
 		var div = dom == null ? document.getElementById('sounds') : dom;
-	    div.innerHTML = '<embed src="'+url+'" loop="0" autostart="true" hidden="true"></embed>';
+	    div.innerHTML = '<embed src="'+url+'" loop="0" autostart="true" hidden="true" type="audio/ogg"></embed>';
 	}
 }
 
