@@ -80,7 +80,7 @@ var settings = {
 
 	/*toolbar*/
 	snow_cd : 1,
-	light_cd : 2,
+	light_cd : 5,
 	stop_cd : 15,
 
 	flash_height : 150,
