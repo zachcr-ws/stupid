@@ -87,8 +87,8 @@ var settings = {
 	light_num : 1,
 	light_speed : 0.5,
 
-	holex : 530,
-	holey : 25,
+	holex : document.documentElement.clientWidth / 2 - 60,
+	holey : 5,
 	hole_speed : 6,
 
 	full_time : 120,
@@ -133,7 +133,6 @@ document.onselectstart = function(e) {
 var Loop = function() {
 
 	//var time = new Date().getTime();
- 	dateOutPut();
 	ctx.clear();
 	settings.now_time = Math.round((new Date()).getTime() / 1000);
 	if(settings.statr_time == 0)settings.statr_time = settings.now_time;
@@ -416,32 +415,34 @@ Toolbar.prototype.draw = function(){
 
 
 
-	var time = parseInt(settings.now_time - settings.statr_time);
-	ctx.circle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_bg_color);
-	ctx.anglecircle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_cd_color,this.time_angle + time * 2.5);
+	//var time = parseInt(settings.now_time - settings.statr_time);
+	//ctx.circle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_bg_color);
+	//ctx.anglecircle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_cd_color,this.time_angle + time * 2.5);
 	
-	var offset = 21;
-	var showtime = over_time - time;
-	if(showtime < 100 && showtime >= 10){
-		offset = 12;
-	}else if(showtime < 10){
-		offset = 6;
-	}
+	// var offset = 21;
+	// var showtime = over_time - time;
+	// if(showtime < 100 && showtime >= 10){
+	// 	offset = 12;
+	// }else if(showtime < 10){
+	// 	offset = 6;
+	// }
 
-	ctx.font = "25px Arial";
-	ctx.fillStyle = "#FFFFFF";
-	if(this.time_light == true){
-		this.time_light = false;
-		ctx.fillStyle = "#ff6600";
-	}	
-	if(showtime <= 0){
-		showtime = 0;
-		gameResult();
-	}
-	ctx.fillText(showtime, this.time_center_x - offset, this.time_center_y + 10);
+	// ctx.font = "25px Arial";
+	// ctx.fillStyle = "#FFFFFF";
+	// if(this.time_light == true){
+	// 	this.time_light = false;
+	// 	ctx.fillStyle = "#ff6600";
+	// }	
+	// if(showtime <= 0){
+	// 	showtime = 0;
+	// 	//时间到
+	// 	//gameResult();
+	// }
+	//ctx.fillText(showtime, this.time_center_x - offset, this.time_center_y + 10);
 }
 
-function gameResult(){
+function gameResult(){	
+	//时间到
 	clearTimeout(allInterval);
 	$(".result").show();
 	$(".result .body .res span").text(all_score);
@@ -559,7 +560,7 @@ People.prototype.update = function(){
 
 	if(this.isScard == 1 && this.turn_num == 0){
 		var scardnum = Utils.random(1,2);
-		Vedio("scard"+scardnum);
+		//Vedio("scard"+scardnum);
 		if(touch_angle > this.angle){
 			this.dire = -1;
 		}else{
@@ -599,10 +600,10 @@ People.prototype.update = function(){
 		this.setTime = null;
 		if(this.angle >= snow_angle_rate.min && this.angle <= snow_angle_rate.max){
 			if(this.status == 1){
-				Vedio("cold");
+				//Vedio("cold");
 				this.cuty = this.cuty - settings.people_height * 2;
 			}else if(this.status == 0){
-				Vedio("cold");
+				//Vedio("cold");
 				this.cuty = this.cuty + settings.people_height * 2;
 			}
 			this.status = 3;
@@ -628,7 +629,7 @@ People.prototype.update = function(){
 			this.cutx = 0;
 			this.cuty = 0;
 			var dienum = Utils.random(1,4);
-			Vedio("die"+dienum);
+			//Vedio("die"+dienum);
 		}
 	}
 
@@ -654,7 +655,8 @@ People.prototype.isKill = function(){
 			kill_onetime = 0;
 			clearTimeout(sett);
 		}
-		putInResData(kill_num,all_score);
+		//杀敌人数
+		//putInResData(kill_num,all_score);
 
 		return true;
 	}
@@ -764,11 +766,11 @@ Planet.prototype.addStop = function() {//增加一棵树:随机选出树得位�
 Planet.prototype.addPeople = function(){
 	peoples.push(
 	new People(270,0));
-	Vedio("born");
+	//Vedio("born");
 }
 
 Planet.prototype.addLight = function(){
-	Vedio("flash");
+	//Vedio("flash");
 	lights.push(
 		new Light(90)
 	);
@@ -1426,12 +1428,11 @@ var Vedio = function(type){
 }
 
 window.onload = function() {
- 
 
 	canvas = document.getElementById('c');
 	ctx = canvas.getContext('2d');
-	canvas.width = 1200;
-	canvas.height = 800;
+	canvas.width = document.documentElement.clientWidth;
+	canvas.height = document.documentElement.clientHeight;
 
 	ctx.circle = function(x, y, r, c) {//画圆
 		this.beginPath();
@@ -1550,7 +1551,7 @@ window.onload = function() {
 		   		if(dis > planet.r / 2 && toolbar.get_light_angle() >= 360){
 					light_angle = Utils.trans_angle(point);
 					lights.push(
-						new Light(Utils.trans_angle(point))
+						new Light(Utils.trans_angle(point));
 					);
 					toolbar.set_light_angle();
 				}
@@ -1576,15 +1577,15 @@ window.onload = function() {
     		loadedImages++;
     		if(loadedImages == numImages){
 				planet = new Planet(
-					canvas.width/ 2,
+					canvas.width/2,
 					canvas.height/2,
-					250
+					canvas.height/3
 				);
 
     			hole = new Hole();
 				toolbar = new Toolbar();
                 allInterval = setInterval(Loop, settings.world_speed);//循环绘制世界 
-    		console.log(settings.img_url);
+    			console.log(settings.img_url);
             }
     	},j);
     }
@@ -1598,6 +1599,10 @@ window.onload = function() {
 	Math.random() * 10 + 4));*/
 	
 };
+
+document.body.addEventListener('touchmove', function (event) {
+    event.preventDefault();
+}, false);
 
 var imgReady = (function () {
     var list = [], intervalId = null,
