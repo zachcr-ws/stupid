@@ -757,7 +757,8 @@ Planet.prototype.addStop = function() {//增加一棵树:随机选出树得位�
 	}
 
 	stops.push(
-	new Stop(angle));
+		new Stop(angle)
+	);
 	setTimeout(function(){
 		touch_angle = null;
 	},50);
@@ -765,7 +766,8 @@ Planet.prototype.addStop = function() {//增加一棵树:随机选出树得位�
 
 Planet.prototype.addPeople = function(){
 	peoples.push(
-	new People(270,0));
+		new People(270,0)
+	);
 	//Vedio("born");
 }
 
@@ -1492,39 +1494,13 @@ window.onload = function() {
 		this.fillRect(0, 0, canvas.width, canvas.height);
 	};
 
-	clicknum = 0;
 	canvas.onmousedown = function(e) {
-		clicknum++
+
 	   	var rect = canvas.getBoundingClientRect();
-   		point =  {
+   		var point =  {
    			x: e.clientX - rect.left,
    			y: e.clientY - rect.top
    		}
-   		if(clicknum == 2){
-			var dis = Utils.distance(point,planet);
-	   		if(dis > planet.r + 130 && toolbar.get_light_angle() >= 360){
-				light_angle = Utils.trans_angle(point);
-				lights.push(
-					new Light(Utils.trans_angle(point))
-				);
-				toolbar.set_light_angle();
-			}
-			canvas.onmousemove = null;
-			flashReady = false;
-   		}
-   		setTimeout(function(){
-   			clicknum = 0;
-   		},200);
-
-	   	var dis = Utils.distance(point,planet);
-		if(dis < 310 && dis >= planet.r - 60){
-			if(toolbar.get_stop_angle() == 360){
-				toolbar.set_stop_angle();
-				touch_angle = Utils.trans_angle(point);
-			}
-		}else if(dis > 310 && dis <= 380){
-			snow_angle = Utils.trans_angle(point);
-		}
 
 		canvas.onmousemove = function(e){
 			var rect = canvas.getBoundingClientRect();
@@ -1539,22 +1515,35 @@ window.onload = function() {
 		}
 
 		canvas.onmouseup = function(e){
-			if(flashReady == true){
 
-				var rect = canvas.getBoundingClientRect();
-		   		point =  {
-		   			x: e.clientX - rect.left,
-		   			y: e.clientY - rect.top
-		   		}
+			var rect = canvas.getBoundingClientRect();
+	   		var upoint =  {
+	   			x: e.clientX - rect.left,
+	   			y: e.clientY - rect.top
+	   		}
+	   		var pdis = Utils.distance(point, planet),
+	   			udis = Utils.distance(upoint, planet),
+	   			point_dis = Utils.distance(point, upoint);
 
-		   		var dis = Utils.distance(point,planet);
-		   		if(dis > planet.r / 2 && toolbar.get_light_angle() >= 360){
-					light_angle = Utils.trans_angle(point);
+			if( flashReady == true ){
+
+				var fpoint = {
+					x : (point.x + upoint.x) / 2,
+					y : (point.y + upoint.y) / 2
+				}
+				
+				if(pdis > udis && toolbar.get_light_angle() >= 360 ) {
+					light_angle = Utils.trans_angle(fpoint);
 					lights.push(
-						new Light(Utils.trans_angle(point));
+						new Light(light_angle)
 					);
 					toolbar.set_light_angle();
+				} else if(pdis < udis) {
+					toolbar.set_stop_angle();
+					touch_angle = Utils.trans_angle(point);
 				}
+			} else if( udis <= planet.r * 2 ) {
+				snow_angle = Utils.trans_angle(point);
 			}
 			canvas.onmousemove = null;
 			flashReady = false;
@@ -1597,12 +1586,63 @@ window.onload = function() {
 	Math.random() * canvas.width,
 	Math.random() * canvas.height,
 	Math.random() * 10 + 4));*/
-	
-};
 
-document.body.addEventListener('touchmove', function (event) {
-    event.preventDefault();
-}, false);
+	/* Mobile Touch */
+	var flashReady = false,
+		upoint,
+		point;
+	document.body.addEventListener('touchstart', onTouchStart,false);
+	document.body.addEventListener('touchmove', onTouchMove, false);
+   	document.body.addEventListener('touchend', onTouchEnd, false)
+
+	function onTouchMove(e){
+	    upoint =  {
+   			x: e.touches[0].clientX,
+   			y: e.touches[0].clientY
+   		}
+
+   		if(Utils.distance(point,upoint) > 100){
+			flashReady = true;
+   		}
+   	}
+
+   	function onTouchEnd(e){
+   		var pdis = Utils.distance(point, planet),
+   			udis = Utils.distance(upoint, planet),
+   			point_dis = Utils.distance(point, upoint);
+
+		if( flashReady == true ){
+
+			var fpoint = {
+				x : (point.x + upoint.x) / 2,
+				y : (point.y + upoint.y) / 2
+			}
+			
+			if(pdis > udis && toolbar.get_light_angle() >= 360) {
+				toolbar.set_light_angle();
+				light_angle = Utils.trans_angle(fpoint);
+				lights.push(
+					new Light(light_angle)
+				);
+			} else if(pdis < udis) {
+				toolbar.set_stop_angle();
+				touch_angle = Utils.trans_angle(point);
+			}
+		} else if( udis <= planet.r * 2 ) {
+			snow_angle = Utils.trans_angle(point);
+		}
+		//canvas.onmousemove = null;
+		flashReady = false;
+   	}
+
+   	function onTouchStart(e){
+		e.preventDefault();//forbidden scroll
+		point =  {
+   			x: e.touches[0].clientX,
+   			y: e.touches[0].clientY
+	   	};
+   	}
+};
 
 var imgReady = (function () {
     var list = [], intervalId = null,
