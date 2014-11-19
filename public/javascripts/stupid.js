@@ -1565,11 +1565,20 @@ window.onload = function() {
     		settings.img_url[this.id] = this;
     		loadedImages++;
     		if(loadedImages == numImages){
-				planet = new Planet(
-					canvas.width/2,
-					canvas.height/2,
-					canvas.height/3
-				);
+				if (canvas.width >= canvas.height){
+					planet = new Planet(
+						canvas.width/2,
+						canvas.height/2,
+						canvas.height/3
+					);
+				} else {
+					settings.holey = canvas.height / 2 - ( canvas.height/3.2 );
+					planet = new Planet(
+						canvas.width/2,
+						canvas.height/2,
+						canvas.height/4.5
+					);
+				}
 
     			hole = new Hole();
 				toolbar = new Toolbar();
@@ -1591,9 +1600,17 @@ window.onload = function() {
 	var flashReady = false,
 		upoint,
 		point;
+	var supportsOrientation = (typeof window.orientation == 'number' && typeof window.onorientationchange == 'object'),
+		temp_orien;
+	
 	document.body.addEventListener('touchstart', onTouchStart,false);
 	document.body.addEventListener('touchmove', onTouchMove, false);
    	document.body.addEventListener('touchend', onTouchEnd, false)
+   	window.addEventListener('orientationchange', updateOrientation, false);  
+
+   	function updateOrientation(){
+		window.location.reload();
+   	}
 
 	function onTouchMove(e){
 	    upoint =  {
