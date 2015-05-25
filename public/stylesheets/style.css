@@ -8,6 +8,57 @@ body {
  background:#333; 
 }
 
+label{
+	color:#BDC3C7;
+	font-size:17px;
+}
+
+p{
+	color:#7F8C8D;
+}
+
+.modal-stupid{
+	z-index: 100000;
+	background: #eff0f2;
+	padding: 20px;
+	border-radius: 5px;
+	margin: auto;
+  	position: absolute;
+  	top: 0; left: 0; bottom: 0; right: 0;
+  	width:500px;
+  	height:350px;
+}
+
+.modal-stupid ul{
+	background: #fff;
+	padding:20px;
+}
+
+.modal-stupid .header{
+	color:#BDC3C7;
+	font-size:20px;
+	font-family: "fantasy";
+	line-height: 40px;
+	border-bottom: 1px solid #BDC3C7
+}
+
+.modal-stupid .body{
+	padding:20px;
+}
+
+.modal-stupid .body .warning{
+	float: left;
+	width:100px;
+	color:#C0392B;
+	width:200px;
+	font-size:14px;
+}
+
+.modal-stupid .body div{
+	padding:20px;
+	position: relative;
+}
+
 #c{
   display:block;
 }

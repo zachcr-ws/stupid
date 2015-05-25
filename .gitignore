@@ -18,3 +18,5 @@ blogs.dir
 .sass-cache
 *-ck.js
 Original\ Files
+node_modules
+bower_components/

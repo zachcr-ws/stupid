@@ -19,7 +19,9 @@ var planet , hole, toolbar, canvas, ctx, water = [],
 	kill_num = 0,
 	clouds_angle = [],
 	clouds_num = 0,
-	allInterval = null;
+	allInterval = null,
+	screenWidth = document.documentElement.clientWidth,
+	screenHeight = document.documentElement.clientHeight;
 
 /*Math circle*/
 Math.Radian = function( angel )    {    return angel*this.PI/180;                }
@@ -323,10 +325,10 @@ var Toolbar = function(){
 	this.stop_center_y = this.stopbtn_y + this.btn_r;
 	this.stop_angle = 360;
 
-	this.timeBtn_x = 1100;
+	this.timeBtn_x = 220;
 	this.timeBtn_y = 10;
-	this.timebtn_r = 35;
-	this.time_center_x = this.timeBtn_x + this.timebtn_r;
+	this.timebtn_r = 30;
+	this.time_center_x = screenWidth - 50;
 	this.time_center_y = this.timeBtn_y + this.timebtn_r;
 	this.time_angle = 0;
 	this.a_sec = parseInt(1000 / settings.world_speed);
@@ -413,43 +415,31 @@ Toolbar.prototype.draw = function(){
 	ctx.anglecircle(this.stop_center_x,this.stop_center_y,this.btn_r,settings.btn_cd_color,this.stop_angle);
 	ctx.drawImage(this.stop_img,this.stopbtn_x,this.stopbtn_y);
 
-
-
-	//var time = parseInt(settings.now_time - settings.statr_time);
-	//ctx.circle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_bg_color);
-	//ctx.anglecircle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_cd_color,this.time_angle + time * 2.5);
+	var time = parseInt(settings.now_time - settings.statr_time);
+	ctx.circle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_bg_color);
+	ctx.anglecircle(this.time_center_x,this.time_center_y,this.timebtn_r,settings.btn_cd_color,this.time_angle + time * 3); // 360度 ＝ 120 * 3
 	
-	// var offset = 21;
-	// var showtime = over_time - time;
-	// if(showtime < 100 && showtime >= 10){
-	// 	offset = 12;
-	// }else if(showtime < 10){
-	// 	offset = 6;
-	// }
+	// Time Number Layout
+	var offset = 21;
+	var showtime = over_time - time;
+	if(showtime < 100 && showtime >= 10){
+		offset = 12;
+	}else if(showtime < 10){
+		offset = 6;
+	}
 
-	// ctx.font = "25px Arial";
-	// ctx.fillStyle = "#FFFFFF";
-	// if(this.time_light == true){
-	// 	this.time_light = false;
-	// 	ctx.fillStyle = "#ff6600";
-	// }	
-	// if(showtime <= 0){
-	// 	showtime = 0;
-	// 	//时间到
-	// 	//gameResult();
-	// }
-	//ctx.fillText(showtime, this.time_center_x - offset, this.time_center_y + 10);
-}
-
-function gameResult(){	
-	//时间到
-	clearTimeout(allInterval);
-	$(".result").show();
-	$(".result .body .res span").text(all_score);
-	$(".result .body .num span").text(kill_num);
-	$(".result .restart").click(function(){
-		window.location.reload();
-	});
+	ctx.font = "25px Arial";
+	ctx.fillStyle = "#fff";
+	if(this.time_light == true){
+		this.time_light = false;
+		ctx.fillStyle = "#ff6600";
+	}	
+	if(showtime <= 0){
+		showtime = 0;
+		//Time on
+		gameResult();
+	}
+	ctx.fillText(showtime, this.time_center_x - offset, this.time_center_y + 10);
 }
 
 var Hole = function(){
@@ -1740,4 +1730,65 @@ function dateOutPut(){
 	$(".score .slow span").text(settings.people_fast_rate_min);	
 	$(".score .snowk span").text(settings.people_snow_speed);
 */
+}
+gameResult()
+function gameResult(){	
+	//时间到
+	clearTimeout(allInterval);
+	$("#modal-stupid").fadeIn();
+	// $(".result .body .res span").text(all_score);
+	// $(".result .body .num span").text(kill_num);
+	// $(".result .restart").click(function(){
+	// 	window.location.reload();
+	// });
+
+	functionsTrigger(all_score, kill_num);
+}
+
+function functionsTrigger(score, killnum){
+	$("#submit_name").on("click" ,function(){
+		var name = $("#userName").val(),
+			suggestion = $("#suggestion").val();
+		if(!name){
+			$("#warning").text("请输入名字");
+			$("input").focus(function(){
+				$("#warning").text('');
+			});
+		}else{
+			var hexid = generateRandomString(8, true, true);
+			var url = "/save"
+			var data = {
+				id : hexid,
+				name : name,
+				suggestion : suggestion,
+				score : parseInt(score),
+				killnum : parseInt(killnum)
+			}
+			console.log(data);
+			$.post(url, data).success(function(resp){
+				if(resp.code == 200){
+					$("#form").hide();
+					$("#message p").text("提交成功，正在载入排名...");
+					$("#message").show();
+					var listUrl = "/getSort"
+					$.get(listUrl).success(function(resp){
+						if(resp.code == 200){
+							$("#message").hide();
+
+							var str = "",
+								users = resp.data;
+							for(var i in users){
+								str += "<li>No." + i + "     昵称：" + users[i]['name'] + "     得分：" + users[i]['score'] + "</li>"
+							}
+							$("#sort ul").append(str);
+
+							$("#sort").show();
+						}else{
+							$("#message p").text(resp.message);
+						}
+					});
+				}
+			});
+		}
+	});
 }
