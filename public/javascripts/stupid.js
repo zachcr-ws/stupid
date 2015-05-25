@@ -1731,8 +1731,8 @@ function dateOutPut(){
 	$(".score .snowk span").text(settings.people_snow_speed);
 */
 }
-gameResult()
-function gameResult(){	
+
+function gameResult(){
 	//时间到
 	clearTimeout(allInterval);
 	$("#modal-stupid").fadeIn();
@@ -1764,7 +1764,6 @@ function functionsTrigger(score, killnum){
 				score : parseInt(score),
 				killnum : parseInt(killnum)
 			}
-			console.log(data);
 			$.post(url, data).success(function(resp){
 				if(resp.code == 200){
 					$("#form").hide();
@@ -1778,11 +1777,13 @@ function functionsTrigger(score, killnum){
 							var str = "",
 								users = resp.data;
 							for(var i in users){
-								str += "<li>No." + i + "     昵称：" + users[i]['name'] + "     得分：" + users[i]['score'] + "</li>"
+								str += "<li><div class='No'>No." + (parseInt(i) + 1) + "</div><div class='nickname'><span class='font'>昵称：</span>" + users[i]['name'] + "</div><div class='point'><span class='font'>得分：</span>" + users[i]['score'] + "</div></li>"
 							}
 							$("#sort ul").append(str);
 
 							$("#sort").show();
+
+							$("#modal-stupid").css({"height": "500px"})
 						}else{
 							$("#message p").text(resp.message);
 						}

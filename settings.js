@@ -1,6 +1,6 @@
 module.exports = { 
   cookieSecret: 'StupidCookie', 
   db: 'stupid', 
-  host: '10.1.0.7',//localhost
+  host: '127.0.0.1',//localhost
   port: 27017
 }; 

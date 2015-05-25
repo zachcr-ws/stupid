@@ -27,6 +27,7 @@ p{
   	top: 0; left: 0; bottom: 0; right: 0;
   	width:500px;
   	height:350px;
+  	/*display: none;*/
 }
 
 .modal-stupid ul{
@@ -149,4 +150,33 @@ p{
 }
 .description .content{
 	padding-top:10px;
+}
+
+#sort li{
+	border-bottom: 1px solid #ccc
+}
+
+#sort li div{
+	display: inline;
+	padding: 0;
+}
+
+.font{
+	color:#aaa;
+	font-weight: lighter;
+}
+
+.No {
+	color: #555;
+	width: 49px;
+}
+
+.nickname {
+	margin-left:20px;
+}
+
+.point {
+	float: right;
+	margin-right:20px;
+	width:90px;
 }
