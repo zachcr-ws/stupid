@@ -1781,7 +1781,13 @@ function functionsTrigger(score, killnum){
 							}
 							$("#sort ul").append(str);
 
+							var button = '<button style="float:right" class="btn btn-embossed btn-primary" id="tryAgain">再来一局</button>';
+							$("#sort").append(button);
+
 							$("#sort").show();
+							$("#tryAgain").on("click", function(){
+								window.location.reload();
+							});
 
 							$("#modal-stupid").css({"height": "500px"})
 						}else{
