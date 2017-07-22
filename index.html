@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Planet</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no"/> 
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    -webkit-backface-visibility:  hidden;
+    -webkit-tap-highlight-color:  transparent;
+}
+
+body {
+    background:#333; 
+}
+
+#c {
+    width: 100%;
+    height: 1136px;
+    position: absolute;
+    top: 50%;
+    margin-top: -568px;
+}
+
+.icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer
+}
+
+svg {
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    -khtml-user-select: none; 
+    user-select: none;
+}
+
+</style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+      <audio controls autoplay hidden loop>
+        <source src="http://otfnvzpg7.bkt.clouddn.com/all-alright.mp3" type="audio/mpeg">
+        <source src="http://otfnvzpg7.bkt.clouddn.com/all-alright.ogg" type="audio/ogg">
+        <source src="http://otfnvzpg7.bkt.clouddn.com/all-alright.wma" type="audio/mpeg">
+    </audio>  
+    <!-- <div class='buttons'>
+        <button>x1</button>
+        <button>x2</button>
+        <button>x5</button>
+    </div> -->
+    <script src="./planet.js?v=1.3"></script>
+</body>
+</html>
