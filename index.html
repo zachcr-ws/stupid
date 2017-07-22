@@ -43,38 +43,31 @@ svg {
 }
 
 </style>
+<link rel='stylesheet' href='nprogress.css'/>
 </head>
 <body>
-    <div id='hidden_audio'></div>
+    <div id='hidden_audio'>
+        <audio controls autoplay preload loop hidden id='bgmusic'>
+            <source src='http://otfnvzpg7.bkt.clouddn.com/all-alright-tiny.mp3' type='audio/mpeg'>
+        </audio>
+    </div>
     <canvas id="c"></canvas>
     <script src="./planet.js?v=1.5"></script>
+    <script src='nprogress.js'></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script>
-        let body = document.getElementById('hidden_audio');
 
-        let audio = document.createElement('audio');
-        audio.setAttribute('controls', 'true');
-        audio.setAttribute('autoplay', 'true');
-        audio.setAttribute('loop', 'true');
-        audio.setAttribute('hidden', 'true');
-        audio.setAttribute('id', 'bgmusic');
+        NProgress.start();
 
-        let source_mp3 = document.createElement('source');
-        source_mp3.setAttribute('src', 'http://otfnvzpg7.bkt.clouddn.com/all-alright-1.mp3');
-        source_mp3.setAttribute('type', 'audio/mpeg');
-
-        let source_ogg = document.createElement('source');
-        source_ogg.setAttribute('src', 'http://otfnvzpg7.bkt.clouddn.com/all-alright.ogg');
-        source_ogg.setAttribute('type', 'audio/ogg');
-
-        audio.appendChild(source_mp3);
-        audio.appendChild(source_ogg);
-        body.appendChild(audio);
+        function load() {
+            NProgress.done();
+            document.getElementById('bgmusic').play();
+            PlanetInit();
+        }
 
         function autoPlayAudio() {
             if ((/MicroMessenger/i).test(window.navigator.userAgent)) {
                 wx.config({
-                    // 配置信息, 即使不正确也能使用 wx.ready
                     debug: false,
                     appId: '',
                     timestamp: 1,
@@ -83,13 +76,11 @@ svg {
                     jsApiList: []
                 });
                 wx.ready(function() {
-                    document.getElementById('bgmusic').play();
-                    PlanetInit();
+                    load();
                 });
             } else {
                 window.onload = function() {
-                    document.getElementById('bgmusic').play();
-                    PlanetInit();
+                    load();
                 };
             }
         }
