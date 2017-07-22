@@ -799,7 +799,7 @@ Cloud.prototype.draw = function() {
 };
 
 
-window.onload = function() {
+let PlanetInit = function() {
  
 
 	canvas = document.getElementById('c');

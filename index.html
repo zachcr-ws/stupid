@@ -47,7 +47,7 @@ svg {
 <body>
     <div id='hidden_audio'></div>
     <canvas id="c"></canvas>
-    <script src="./planet.js?v=1.3"></script>
+    <script src="./planet.js?v=1.5"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script>
         let body = document.getElementById('hidden_audio');
@@ -72,18 +72,26 @@ svg {
         body.appendChild(audio);
 
         function autoPlayAudio() {
-            wx.config({
-                // 配置信息, 即使不正确也能使用 wx.ready
-                debug: false,
-                appId: '',
-                timestamp: 1,
-                nonceStr: '',
-                signature: '',
-                jsApiList: []
-            });
-            wx.ready(function() {
-                document.getElementById('bgmusic').play();
-            });
+            if ((/MicroMessenger/i).test(window.navigator.userAgent)) {
+                wx.config({
+                    // 配置信息, 即使不正确也能使用 wx.ready
+                    debug: false,
+                    appId: '',
+                    timestamp: 1,
+                    nonceStr: '',
+                    signature: '',
+                    jsApiList: []
+                });
+                wx.ready(function() {
+                    document.getElementById('bgmusic').play();
+                    PlanetInit();
+                });
+            } else {
+                window.onload = function() {
+                    document.getElementById('bgmusic').play();
+                    PlanetInit();
+                };
+            }
         }
         autoPlayAudio();
     </script>
