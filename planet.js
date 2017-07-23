@@ -33,8 +33,8 @@ var settings = {
 	fruit_age: 400,
 	fruit_size: 6,
 	fruit_gravity: 0.5,
-	freeze_rate: 0.1,
-	freeze_chance: 1000,
+	freeze_rate: 0.05,
+	freeze_chance: 2000,
 	snow_height: 2,
 	drown_time: 100,
 	cloud_chance: 2000,
@@ -801,11 +801,26 @@ Cloud.prototype.draw = function() {
 
 let PlanetInit = function() {
  
+	function detectmob() { 
+		if( navigator.userAgent.match(/Android/i)
+		|| navigator.userAgent.match(/webOS/i)
+		|| navigator.userAgent.match(/iPhone/i)
+		|| navigator.userAgent.match(/iPad/i)
+		|| navigator.userAgent.match(/iPod/i)
+		|| navigator.userAgent.match(/BlackBerry/i)
+		|| navigator.userAgent.match(/Windows Phone/i)
+		){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	canvas = document.getElementById('c');
 	ctx = canvas.getContext('2d');
-	canvas.width = document.body.offsetWidth;
-	canvas.height = 1136;
+	canvas.width = detectmob() ? document.body.offsetWidth : 800;
+	canvas.height = detectmob() ? 1136 : 800;
 
 	ctx.circle = function(x, y, r, c) {
 		this.beginPath();
